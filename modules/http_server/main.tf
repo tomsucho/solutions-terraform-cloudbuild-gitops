@@ -19,7 +19,7 @@ locals {
 
 resource "google_compute_instance" "http_server" {
   project      = "${var.project}"
-  zone         = "us-west1-a"
+  zone         = "us-east1-a"
   name         = "${local.network}-apache2-instance"
   machine_type = "f1-micro"
 
@@ -27,7 +27,7 @@ resource "google_compute_instance" "http_server" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9"
+      image = "debian-cloud/debian-10"
     }
   }
 
