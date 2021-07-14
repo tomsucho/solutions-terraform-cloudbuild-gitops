@@ -28,6 +28,7 @@ output "firewall_rule" {
 output "shared_subnet_cidr" {
   value = data.google_compute_subnetwork.shared-vpc-subnet.ip_cidr_range
 }
+
 # output "instance_name" {
 #   value = "${module.http_server.instance_name}"
 # }

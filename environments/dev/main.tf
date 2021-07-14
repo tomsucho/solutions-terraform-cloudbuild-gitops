@@ -30,10 +30,6 @@ data "terraform_remote_state" "shared-vpc-state" {
   }
 }
 
-resource "google_compute_network" "shared-vpc" {
-  name = data.terraform_remote_state.shared-vpc-state.outputs.network
-}
-
 provider "google" {
   project = var.project
 }
