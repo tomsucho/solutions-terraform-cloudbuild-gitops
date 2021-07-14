@@ -22,6 +22,18 @@ data "google_compute_subnetwork" "shared-vpc-subnet" {
   region = "us-east4"
 }
 
+data "terraform_remote_state" "shared-vpc-state" {
+  backend = "gcs"
+  config = {
+    bucket = "prj-bu1-c-infra-pipeline-ac69-tfstate"
+    prefix = "env/shared"
+  }
+}
+
+resource "google_compute_network" "shared-vpc" {
+  name = data.terraform_remote_state.shared-vpc-state.outputs.network
+}
+
 provider "google" {
   project = var.project
 }
@@ -33,11 +45,11 @@ module "vpc" {
   subnet_cidr = "10.10.0.0/16"
 }
 
-# module "http_server" {
-#   source  = "../../modules/http_server"
-#   project = "${var.project}"
-#   subnet  = "${module.vpc.subnet}"
-# }
+module "http_server" {
+  source  = "../../modules/http_server"
+  project = var.project
+  subnet  = module.vpc.subnet
+}
 
 module "firewall" {
   source  = "../../modules/firewall"
