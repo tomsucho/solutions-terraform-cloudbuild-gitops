@@ -28,11 +28,11 @@ module "vpc" {
   subnet_cidr = "10.30.0.0/16"
 }
 
-module "http_server" {
-  source  = "../../modules/http_server"
-  project = var.project
-  subnet  = module.vpc.subnet
-}
+# module "http_server" {
+#   source  = "../../modules/http_server"
+#   project = var.project
+#   subnet  = module.vpc.subnet
+# }
 
 module "firewall" {
   source  = "../../modules/firewall"
