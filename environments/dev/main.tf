@@ -25,6 +25,7 @@ module "vpc" {
   source  = "../../modules/vpc"
   project = "${var.project}"
   env     = "${local.env}"
+  subnet_cidr = "10.10.0.0/16"
 }
 
 # module "http_server" {
