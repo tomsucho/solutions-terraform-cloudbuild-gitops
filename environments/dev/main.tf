@@ -17,14 +17,19 @@ locals {
   env = "dev"
 }
 
+data "google_compute_subnetwork" "shared-vpc-subnet" {
+  name   = "shared-subnet-01"
+  region = "us-east4"
+}
+
 provider "google" {
-  project = "${var.project}"
+  project = var.project
 }
 
 module "vpc" {
-  source  = "../../modules/vpc"
-  project = "${var.project}"
-  env     = "${local.env}"
+  source      = "../../modules/vpc"
+  project     = var.project
+  env         = local.env
   subnet_cidr = "10.10.0.0/16"
 }
 
@@ -36,6 +41,6 @@ module "vpc" {
 
 module "firewall" {
   source  = "../../modules/firewall"
-  project = "${var.project}"
-  subnet  = "${module.vpc.subnet}"
+  project = var.project
+  subnet  = module.vpc.subnet
 }
